@@ -22,24 +22,24 @@ public abstract class AbstractQASystem implements QASystem {
 	@SuppressWarnings("unchecked")
 	private JSONObject getAnswersAsQALD(Set<String> answers, AnswerType answerType) throws IOException, ParseException {
 		
-	//	String varName = answerType.toString().toLowerCase();
+		String varName = answerType.toString().toLowerCase();
 		JSONObject answerJson = new JSONObject();
 		JSONObject head = new JSONObject();
 		JSONArray varArr = new JSONArray();
-		//varArr.add(varName);
+		varArr.add(varName);
 		head.put("vars", varArr);
 		JSONObject results = new JSONObject();
 		JSONArray bindings = new JSONArray();
 		for (String answer : answers) {
 			JSONObject binding = new JSONObject();
 			JSONObject var = new JSONObject();
-		//	String answerT = answerType.toString().toLowerCase();
-			/*if("resource".equals(answerT)) {
+			String answerT = answerType.toString().toLowerCase();
+			if("resource".equals(answerT)) {
 				answerT = "uri";
 			}
 			var.put("type", answerT);
-			var.put("value", answer);*/
-		//	binding.put(varName, var);
+			var.put("value", answer);
+			binding.put(varName, var);
 			bindings.add(binding);
 		}
 		results.put("bindings", bindings);
@@ -59,8 +59,8 @@ public abstract class AbstractQASystem implements QASystem {
 		// sets the answers
 		q.setGoldenAnswers(lang, answers.getAnswers());
 		// sets the answertype as lower case (e.g. resource)
-	
-		//q.setAnswerType(answers.getType().toString().toLowerCase());
+		q.setAnswerType(answers.getType().toString().toLowerCase());
+		//
 		q.setSparqlQuery(lang, answers.getSparqlQuery());
 		try {
 			q.setAnswerAsQALDJSON(getAnswersAsQALD(answers.getAnswers(), answers.getType()));

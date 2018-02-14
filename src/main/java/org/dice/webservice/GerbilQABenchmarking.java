@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
-import org.dice.qa.MyQASystem;
 import org.dice.qa.QASystem;
 import org.dice.qa.impl.ExampleQASystem;
 import org.dice.util.GerbilFinalResponse;
@@ -38,8 +37,8 @@ public class GerbilQABenchmarking {
 		 * 
 		 * CREATE YOUR SYSTEM HERE 
 		 */
-		//system = new ExampleQASystem();
-		system = new MyQASystem();
+		system = new ExampleQASystem();
+		//system = new MyQASystem();
 	}
 
 	@RequestMapping(value = "/gerbil", method = RequestMethod.POST)
