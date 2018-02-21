@@ -32,7 +32,11 @@ public class AnswerContainer {
 		/**
 		 * Answer is a number
 		 */
-		NUMBER
+		NUMBER,
+		/**
+		 * String 
+		 */
+		STRING
 	};
 	
 	/**
