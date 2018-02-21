@@ -72,8 +72,11 @@ public class MyQASystem extends AbstractQASystem{
 		//Set your answers
 		answers.setAnswers(answerSet);
 
-                //Get the type (RESOURCE, BOOLEAN, NUMBER, DATE)
-                AnswerType type = AnswerType.valueOf(mySystem.lastAnswer().getType());
+                /* Get the type (RESOURCE, BOOLEAN, NUMBER, DATE)
+		 * OPTIONAL! If possible set this for a more accurate solution, 
+		 * otherwise it will be guessed.
+		 */
+		AnswerType type = AnswerType.valueOf(mySystem.lastAnswer().getType());
 		answers.setType(type);
 
                 //Set the sparql query your system used
