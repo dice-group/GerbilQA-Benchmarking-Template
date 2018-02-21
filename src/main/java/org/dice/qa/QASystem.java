@@ -1,7 +1,5 @@
 package org.dice.qa;
 
-import javax.annotation.PreDestroy;
-
 import org.aksw.qa.commons.datastructure.Question;
 import org.json.simple.JSONObject;
 
