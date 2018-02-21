@@ -80,11 +80,18 @@ public class MyQASystem extends AbstractQASystem{
 		answers.setSparqlQuery(mySystem.lastAnswer().getSparqlQuery());
 
 		return answers;
-}
+	}
+	
+	@Override
+	public void close(){
+		super.close();
+		//This will called as soon as the system will be shutdown
+		//Use it to open resources etc.
+	}
 }
 ```
 
-Then you have to change the following [line 40](https://github.com/dice-group/GerbilQA-Benchmarking-Template/blob/master/src/main/java/org/dice/webservice/GerbilQABenchmarking.java#L40) in the [GerbilQABenchmarking](https://github.com/dice-group/GerbilQA-Benchmarking-Template/blob/master/src/main/java/org/dice/webservice/GerbilQABenchmarking.java) Class
+Then you have to change the following [line 21](https://github.com/dice-group/GerbilQA-Benchmarking-Template/blob/f126a578531351100e90de64229b1bf52658e4a5/src/main/java/org/dice/webservice/WebApplication.java#L21) in the [WebApplication](https://github.com/dice-group/GerbilQA-Benchmarking-Template/blob/master/src/main/java/org/dice/webservice/WebApplication.java#L21) Class
 
 to 
 ```java
