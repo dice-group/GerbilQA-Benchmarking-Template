@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletResponse;
 
 import org.aksw.qa.commons.datastructure.Question;
@@ -15,6 +16,8 @@ import org.dice.util.GerbilFinalResponse;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,19 +30,11 @@ import com.github.jsonldjava.utils.JsonUtils;
 @RestController
 public class GerbilQABenchmarking {
 	private Logger log = LoggerFactory.getLogger(GerbilQABenchmarking.class);
+	
+	@Autowired
 	protected QASystem system;
 	
-	
-	public GerbilQABenchmarking() {
-		/*
-		 * This is an Example QA System providing a static response. 
-		 * Implement your System as a QASystem and create it here
-		 * 
-		 * CREATE YOUR SYSTEM HERE 
-		 */
-		system = new ExampleQASystem();
-		//system = new MyQASystem();
-	}
+
 
 	@RequestMapping(value = "/gerbil", method = RequestMethod.POST)
 	public String askGerbil(@RequestParam Map<String, String> params, final HttpServletResponse response) throws ExecutionException, RuntimeException, IOException, ParseException {
@@ -57,4 +52,9 @@ public class GerbilQABenchmarking {
 		return JsonUtils.toPrettyString(answer);
 	}
 
+	@PreDestroy
+	public void close() {
+		System.out.println("System will be shutdown");
+		system.close();
+	}
 }

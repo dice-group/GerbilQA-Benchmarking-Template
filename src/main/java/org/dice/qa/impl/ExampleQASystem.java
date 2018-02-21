@@ -2,6 +2,8 @@ package org.dice.qa.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.PreDestroy;
+
 import org.dice.qa.AbstractQASystem;
 import org.dice.qa.AnswerContainer;
 import org.dice.qa.AnswerContainer.AnswerType;
@@ -35,5 +37,9 @@ public class ExampleQASystem extends AbstractQASystem{
 		return answers;
 	}
 	
-
+	@Override
+	public void close() {
+		System.out.println("Closing System now.");
+	}
+	
 }

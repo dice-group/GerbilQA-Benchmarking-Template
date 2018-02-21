@@ -2,6 +2,9 @@ package org.dice.qa;
 
 import java.io.IOException;
 import java.util.Set;
+
+import javax.annotation.PreDestroy;
+
 import org.aksw.qa.commons.datastructure.Question;
 import org.dice.qa.AnswerContainer.AnswerType;
 import org.dice.util.GerbilFinalResponse;
@@ -126,6 +129,11 @@ public abstract class AbstractQASystem implements QASystem {
 		}
 		return null;
 	}
+	
+	@Override
+	public void close() {
+		//empty function
+	}
 
 	/**
 	 * Retrieves the Answers from the System for a particular question and its
@@ -138,4 +146,5 @@ public abstract class AbstractQASystem implements QASystem {
 	 * @return
 	 */
 	public abstract AnswerContainer retrieveAnswers(String question, String lang);
+	
 }

@@ -1,5 +1,7 @@
 package org.dice.qa;
 
+import javax.annotation.PreDestroy;
+
 import org.aksw.qa.commons.datastructure.Question;
 import org.json.simple.JSONObject;
 
@@ -20,4 +22,9 @@ public interface QASystem {
 	 */
 	public JSONObject getAnswersToQuestion(final Question question, String lang);
 	
+	
+	/**
+	 * Closes all the resources used
+	 */
+	public void close();
 }
