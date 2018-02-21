@@ -1,9 +1,8 @@
 package org.dice.qa;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Set;
-
-import javax.annotation.PreDestroy;
 
 import org.aksw.qa.commons.datastructure.Question;
 import org.dice.qa.AnswerContainer.AnswerType;
@@ -22,9 +21,13 @@ import com.fasterxml.jackson.databind.ObjectWriter;
  */
 public abstract class AbstractQASystem implements QASystem {
 
+	protected static final String REGEX_URI = "^(\\w+):(\\/\\/)?[-a-zA-Z0-9+&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]";
+	
 	@SuppressWarnings("unchecked")
 	private JSONObject getAnswersAsQALD(Set<String> answers, AnswerType answerType) throws IOException, ParseException {
-
+		if(answerType==null) {
+			answerType = guessAnswerType(answers);
+		}
 		String varName = answerType.toString().toLowerCase();
 		JSONObject answerJson = new JSONObject();
 		JSONObject head = new JSONObject();
@@ -63,6 +66,38 @@ public abstract class AbstractQASystem implements QASystem {
 		answerJson.put("results", results);
 
 		return answerJson;
+	}
+
+	/**
+	 * Guesses the broad AnswerType (Resource, boolean, literal)
+	 * 
+	 * @param answers
+	 * @return
+	 */
+	public AnswerType guessAnswerType(Set<String> answers) {
+		if(answers.size()>=1) {
+			Iterator<String> answerIt = answers.iterator();
+			//check if boolean
+			String answer = answerIt.next().toLowerCase();
+			if(answers.size()==1 && answer.equals("true") || answer.equals("false")) {
+				return AnswerType.BOOLEAN;
+			}
+			//check if all are uris
+			boolean isUri=answer.matches(REGEX_URI);
+			while(answerIt.hasNext()&&isUri) {
+				answer = answerIt.next().toLowerCase();
+				isUri &= answer.matches(REGEX_URI);
+			}
+			if(isUri) {
+				return AnswerType.RESOURCE;
+			}
+			//otherwise assume it is a literal
+			return AnswerType.LITERAL;
+			
+		}
+		
+		//otherwise its empty
+		return AnswerType.EMPTY;
 	}
 
 	@SuppressWarnings("unchecked")

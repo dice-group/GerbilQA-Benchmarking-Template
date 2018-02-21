@@ -36,7 +36,15 @@ public class AnswerContainer {
 		/**
 		 * String 
 		 */
-		STRING
+		STRING,
+		/**
+		 * A non distinguished literal
+		 */
+		LITERAL,
+		/**
+		 * Empty Set
+		 */
+		EMPTY
 	};
 	
 	/**
